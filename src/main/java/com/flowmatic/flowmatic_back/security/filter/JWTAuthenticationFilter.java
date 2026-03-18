@@ -44,7 +44,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
           .readValue(request.getInputStream(), LoginRequest.class);
 
       Authentication authentication = new UsernamePasswordAuthenticationToken(
-          loginRequest.getUsername(),
+          loginRequest.getEmail(),
           loginRequest.getPassword());
 
       return authentificationManager.authenticate(authentication);
@@ -82,7 +82,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         "Bearer " + token,
         userDetail.getUser().getId(),
         userDetail.getUser().getAgency().getId(),
-        userDetail.getUsername(),
+        userDetail.getUser().getFirstName(),
         roles);
 
     response.setContentType("application/json");
