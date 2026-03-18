@@ -13,10 +13,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "quote_inclusions")
+@Table(name = "quote_accommodations")
 @Data
 @NoArgsConstructor
-public class QuoteInclusion {
+public class QuoteAccommodation {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +26,19 @@ public class QuoteInclusion {
   @JoinColumn(name = "quote_id", nullable = false)
   private Quote quote;
 
+  @Column(length = 255)
+  private String name;
+
+  @Column(length = 255)
+  private String location;
+
+  @Column(length = 50)
+  private String rating;
+
   @Column(columnDefinition = "TEXT")
   private String description;
 
-  @Column(nullable = false)
-  private Boolean included;
+  @Column(name = "display_order")
+  private Integer displayOrder;
 
 }
