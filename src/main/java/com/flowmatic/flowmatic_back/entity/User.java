@@ -39,9 +39,6 @@ public class User {
   @JoinColumn(name = "agency_id", nullable = false)
   private Agency agency;
 
-  @Column(nullable = false, unique = true, length = 100)
-  private String username;
-
   @Column(nullable = false)
   private String password;
 

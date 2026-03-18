@@ -37,6 +37,8 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-security</artifactId>
+				<version>3.5.11</version>
+				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
@@ -90,25 +92,11 @@
 			  <version>5.2.0</version>
 			  <scope>test</scope>
   		</dependency>
-
-			<!-- JWT -->
 			<dependency>
-				<groupId>io.jsonwebtoken</groupId>
-				<artifactId>jjwt-api</artifactId>
-				<version>0.12.6</version>
-			</dependency>
-			<dependency>
-				<groupId>io.jsonwebtoken</groupId>
-				<artifactId>jjwt-impl</artifactId>
-				<version>0.12.6</version>
-				<scope>runtime</scope>
-			</dependency>
-			<dependency>
-				<groupId>io.jsonwebtoken</groupId>
-				<artifactId>jjwt-jackson</artifactId>
-				<version>0.12.6</version>
-				<scope>runtime</scope>
-			</dependency>
+        <groupId>com.auth0</groupId>
+        <artifactId>java-jwt</artifactId>
+        <version>4.5.1</version>
+      </dependency>
 
 			<!-- Cloudinary -->
 			<dependency>
