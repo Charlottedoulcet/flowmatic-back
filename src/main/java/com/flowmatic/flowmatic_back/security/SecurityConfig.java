@@ -46,6 +46,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .authorizeHttpRequests(request -> request
+                        .requestMatchers("/api/auth/register").permitAll()
                         .requestMatchers("/api/quotes/**").hasAnyRole("EMPLOYEE", "ADMIN")
                         .requestMatchers("/api/users/**").hasRole("ADMIN")
                         .requestMatchers("/api/agency/**").hasRole("ADMIN")
