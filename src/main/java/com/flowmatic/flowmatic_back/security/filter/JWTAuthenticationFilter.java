@@ -83,6 +83,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         userDetail.getUser().getId(),
         userDetail.getUser().getAgency().getId(),
         userDetail.getUser().getFirstName(),
+        userDetail.getUser().getLastName(),
         roles);
 
     response.setContentType("application/json");

@@ -6,6 +6,10 @@ import java.time.LocalDateTime;
 
 import com.flowmatic.flowmatic_back.entity.enums.QuoteStatus;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,6 +20,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -38,7 +43,7 @@ public class Quote {
   private Agency agency;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "created_by", nullable = false)
+  @JoinColumn(name = "created_by", nullable = true)
   private User createdBy;
 
   @Column(name = "reference_number", length = 50)
@@ -81,6 +86,21 @@ public class Quote {
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)
   private QuoteStatus status = QuoteStatus.PENDING;
+
+  @OneToMany(mappedBy = "quote", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<QuoteDay> days = new ArrayList<>();
+
+  @OneToMany(mappedBy = "quote", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<QuoteInclusion> inclusions = new ArrayList<>();
+
+  @OneToMany(mappedBy = "quote", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<PaymentCondition> paymentConditions = new ArrayList<>();
+
+  @OneToMany(mappedBy = "quote", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<QuoteSupplement> supplements = new ArrayList<>();
+
+  @OneToMany(mappedBy = "quote", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<QuoteAccommodation> accommodations = new ArrayList<>();
 
   @Column(name = "created_at")
   private LocalDateTime createdAt;

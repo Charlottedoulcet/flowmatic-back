@@ -74,6 +74,6 @@ public class AuthServiceImpl implements AuthService {
 
         .sign(Algorithm.HMAC256(jwtSecret));
 
-    return new AuthResponse("Bearer " + token, user.getId(), agency.getId(), user.getFirstName(), roles);
+    return new AuthResponse("Bearer " + token, user.getId(), agency.getId(), user.getFirstName(), user.getLastName(), roles);
   }
 }

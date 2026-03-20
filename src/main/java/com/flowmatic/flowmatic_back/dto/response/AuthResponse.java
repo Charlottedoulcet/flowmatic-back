@@ -13,6 +13,7 @@ public class AuthResponse {
   private Long userId;
   private Long agencyId;
   private String firstName;
+  private String lastName;
   private Set<String> roles;
 
 }
