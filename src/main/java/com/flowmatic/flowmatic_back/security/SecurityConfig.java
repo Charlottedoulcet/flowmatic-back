@@ -3,6 +3,7 @@ package com.flowmatic.flowmatic_back.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
         private final CustomAuthenticationManager customAuthenticationManager;
         private final CorsConfigurationSource corsConfigurationSource;
@@ -49,7 +51,7 @@ public class SecurityConfig {
                                 .authorizeHttpRequests(request -> request
                                                 .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                                                 .requestMatchers("/error").permitAll()
-                                                .requestMatchers("/api/quotes/**").hasAnyRole("EMPLOYEE", "ADMIN")
+                                                .requestMatchers("/api/quotes/**").hasAnyRole("EMPLOYEE")
                                                 .requestMatchers("/api/users/**").hasRole("ADMIN")
                                                 .requestMatchers("/api/agency/**").hasRole("ADMIN")
                                                 .requestMatchers("/api/uploads/**").authenticated()
