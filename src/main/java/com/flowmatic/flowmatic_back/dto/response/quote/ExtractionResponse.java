@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 public class ExtractionResponse {
   private String title;
   private String clientName;
+  private Integer participantCount;
   private String destination;
   private String travelWishes;
   private String startDate;
