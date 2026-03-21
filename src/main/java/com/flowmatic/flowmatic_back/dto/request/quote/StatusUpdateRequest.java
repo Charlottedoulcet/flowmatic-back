@@ -1,4 +1,4 @@
-package com.flowmatic.flowmatic_back.dto.request;
+package com.flowmatic.flowmatic_back.dto.request.quote;
 
 import com.flowmatic.flowmatic_back.entity.enums.QuoteStatus;
 

@@ -1,4 +1,4 @@
-package com.flowmatic.flowmatic_back.dto.response;
+package com.flowmatic.flowmatic_back.dto.response.quote;
 
 import java.math.BigDecimal;
 
