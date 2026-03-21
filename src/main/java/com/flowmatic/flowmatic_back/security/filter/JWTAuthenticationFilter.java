@@ -13,8 +13,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.flowmatic.flowmatic_back.dto.request.LoginRequest;
-import com.flowmatic.flowmatic_back.dto.response.AuthResponse;
+import com.flowmatic.flowmatic_back.dto.request.auth.LoginRequest;
+import com.flowmatic.flowmatic_back.dto.response.auth.AuthResponse;
 import com.flowmatic.flowmatic_back.security.CustomAuthenticationManager;
 import com.flowmatic.flowmatic_back.security.UserDetail;
 

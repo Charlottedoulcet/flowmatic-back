@@ -2,7 +2,7 @@ package com.flowmatic.flowmatic_back.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.flowmatic.flowmatic_back.dto.response.QuoteListResponse;
+import com.flowmatic.flowmatic_back.dto.response.quote.QuoteListResponse;
 import com.flowmatic.flowmatic_back.entity.Quote;
 
 @Component

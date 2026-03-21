@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flowmatic.flowmatic_back.dto.request.RegisterRequest;
-import com.flowmatic.flowmatic_back.dto.response.AuthResponse;
+import com.flowmatic.flowmatic_back.dto.request.auth.RegisterRequest;
+import com.flowmatic.flowmatic_back.dto.response.auth.AuthResponse;
 import com.flowmatic.flowmatic_back.service.AuthService;
 
 import jakarta.validation.Valid;

@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.flowmatic.flowmatic_back.dto.request.RegisterRequest;
-import com.flowmatic.flowmatic_back.dto.response.AuthResponse;
+import com.flowmatic.flowmatic_back.dto.request.auth.RegisterRequest;
+import com.flowmatic.flowmatic_back.dto.response.auth.AuthResponse;
 import com.flowmatic.flowmatic_back.entity.Agency;
 import com.flowmatic.flowmatic_back.entity.User;
 import com.flowmatic.flowmatic_back.entity.enums.Role;

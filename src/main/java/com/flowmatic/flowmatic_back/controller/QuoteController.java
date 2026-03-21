@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flowmatic.flowmatic_back.dto.request.StatusUpdateRequest;
-import com.flowmatic.flowmatic_back.dto.response.QuoteListResponse;
+import com.flowmatic.flowmatic_back.dto.request.quote.StatusUpdateRequest;
+import com.flowmatic.flowmatic_back.dto.response.quote.QuoteListResponse;
 import com.flowmatic.flowmatic_back.service.QuoteService;
 
 import jakarta.validation.Valid;

@@ -1,4 +1,4 @@
-package com.flowmatic.flowmatic_back.dto.request;
+package com.flowmatic.flowmatic_back.dto.request.auth;
 
 import lombok.Data;
 

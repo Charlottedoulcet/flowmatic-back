@@ -6,7 +6,7 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.flowmatic.flowmatic_back.dto.response.QuoteListResponse;
+import com.flowmatic.flowmatic_back.dto.response.quote.QuoteListResponse;
 import com.flowmatic.flowmatic_back.entity.Quote;
 import com.flowmatic.flowmatic_back.entity.User;
 import com.flowmatic.flowmatic_back.entity.enums.QuoteStatus;
