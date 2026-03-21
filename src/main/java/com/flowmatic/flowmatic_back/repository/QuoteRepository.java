@@ -12,11 +12,13 @@ import com.flowmatic.flowmatic_back.entity.Quote;
 
 public interface QuoteRepository extends JpaRepository<Quote, Long> {
 
-  List<Quote> findByAgencyId(Long agencyId);
+  public List<Quote> findByAgencyId(Long agencyId);
 
-  List<Quote> findByAgencyIdAndCreatedById(Long agencyId, Long userId);
+  public List<Quote> findByAgencyIdAndCreatedById(Long agencyId, Long userId);
 
-  Optional<Quote> findByIdAndAgencyId(Long id, Long agencyId);
+  public Optional<Quote> findByIdAndAgencyId(Long id, Long agencyId);
+
+  public long countByAgencyId(Long agencyId);
 
   // Utilisé avant de supprimer un user — préserve les devis mais efface le lien
   @Modifying

@@ -46,7 +46,7 @@ public class Quote {
   @JoinColumn(name = "created_by", nullable = true)
   private User createdBy;
 
-  @Column(name = "reference_number", length = 50)
+  @Column(name = "reference_number", length = 50, unique = true)
   private String referenceNumber;
 
   @Column(length = 255)
