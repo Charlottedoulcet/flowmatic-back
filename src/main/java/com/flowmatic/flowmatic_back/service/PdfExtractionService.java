@@ -26,7 +26,7 @@ public class PdfExtractionService {
   @Value("${ANTHROPIC_API_KEY}")
   private String apiKey;
 
-  private static final String MODEL = "claude-sonnet-4-6-20251001";
+  private static final String MODEL = "claude-sonnet-4-6";
   private static final String API_URL = "https://api.anthropic.com/v1/messages";
 
   public PdfExtractionService(ObjectMapper objectMapper) {
@@ -44,7 +44,7 @@ public class PdfExtractionService {
 
       Map<String, Object> requestBody = Map.of(
           "model", MODEL,
-          "max_tokens", 4096,
+          "max_tokens", 16000,
           "messages", List.of(
               Map.of("role", "user", "content", List.of(
                   Map.of(
