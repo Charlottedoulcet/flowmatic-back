@@ -64,6 +64,12 @@ public class GlobalExceptionHandler {
         .body(buildError(502, "Upload Failed", ex.getMessage()));
   }
 
+  @ExceptionHandler(ImageSearchException.class)
+  public ResponseEntity<Map<String, Object>> handleImageSearch(ImageSearchException ex) {
+    return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+        .body(buildError(502, "Image Search Failed", ex.getMessage()));
+  }
+
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException ex) {
     String message = ex.getBindingResult().getFieldErrors().stream()
