@@ -1,21 +1,20 @@
 package com.flowmatic.flowmatic_back.security.filter;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flowmatic.flowmatic_back.dto.request.auth.LoginRequest;
 import com.flowmatic.flowmatic_back.dto.response.auth.AuthResponse;
 import com.flowmatic.flowmatic_back.security.CustomAuthenticationManager;
+import com.flowmatic.flowmatic_back.security.JwtTokenService;
 import com.flowmatic.flowmatic_back.security.UserDetail;
 
 import jakarta.servlet.FilterChain;
@@ -24,16 +23,14 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-  private final CustomAuthenticationManager authentificationManager;
-  private final String jwtSecret;
-  private final long jwtExpiration;
+  private final CustomAuthenticationManager authenticationManager;
+  private final JwtTokenService jwtTokenService;
 
-  public JWTAuthenticationFilter(CustomAuthenticationManager authenticationManager, String jwtSecret,
-      long jwtExpiration) {
+  public JWTAuthenticationFilter(CustomAuthenticationManager authenticationManager,
+      JwtTokenService jwtTokenService) {
     super(authenticationManager);
-    this.authentificationManager = authenticationManager;
-    this.jwtSecret = jwtSecret;
-    this.jwtExpiration = jwtExpiration;
+    this.authenticationManager = authenticationManager;
+    this.jwtTokenService = jwtTokenService;
   }
 
   @Override
@@ -47,10 +44,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
           loginRequest.getEmail(),
           loginRequest.getPassword());
 
-      return authentificationManager.authenticate(authentication);
+      return authenticationManager.authenticate(authentication);
 
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new AuthenticationServiceException("Erreur de lecture des identifiants", e);
     }
   }
 
@@ -70,13 +67,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         .map(auth -> auth.getAuthority())
         .collect(Collectors.toSet());
 
-    String token = JWT.create()
-        .withSubject(userDetail.getUsername())
-        .withClaim("userId", userDetail.getUser().getId())
-        .withClaim("agencyId", userDetail.getUser().getAgency().getId())
-        .withClaim("roles", String.join(",", roles))
-        .withExpiresAt(new Date(System.currentTimeMillis() + jwtExpiration))
-        .sign(Algorithm.HMAC256(jwtSecret));
+    String token = jwtTokenService.createToken(
+        userDetail.getUsername(),
+        userDetail.getUser().getId(),
+        userDetail.getUser().getAgency().getId(),
+        roles);
 
     AuthResponse authResponse = new AuthResponse(
         "Bearer " + token,
