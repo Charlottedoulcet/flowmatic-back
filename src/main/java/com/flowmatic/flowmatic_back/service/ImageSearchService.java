@@ -1,9 +1,11 @@
 package com.flowmatic.flowmatic_back.service;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -22,7 +24,10 @@ public class ImageSearchService {
   private String accessKey;
 
   public ImageSearchService(ObjectMapper objectMapper) {
-    this.restClient = RestClient.create();
+    SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+    factory.setConnectTimeout(Duration.ofSeconds(10));
+    factory.setReadTimeout(Duration.ofSeconds(15));
+    this.restClient = RestClient.builder().requestFactory(factory).build();
     this.objectMapper = objectMapper;
   }
 
@@ -51,5 +56,4 @@ public class ImageSearchService {
       throw new ImageSearchException("Erreur lors de la recherche d'images : " + e.getMessage());
     }
   }
-
 }

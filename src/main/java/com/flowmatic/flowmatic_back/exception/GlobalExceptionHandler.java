@@ -78,4 +78,10 @@ public class GlobalExceptionHandler {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
         .body(buildError(400, "Validation Error", message));
   }
+
+  @ExceptionHandler(Exception.class)
+  public ResponseEntity<Map<String, Object>> handleUnexpected(Exception ex) {
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body(buildError(500, "Internal Server Error", "Une erreur inattendue s'est produite."));
+  }
 }

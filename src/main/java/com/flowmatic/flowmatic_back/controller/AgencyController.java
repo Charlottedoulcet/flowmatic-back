@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
 import com.flowmatic.flowmatic_back.dto.request.agency.AgencyUpdateRequest;
 import com.flowmatic.flowmatic_back.dto.response.agency.AgencyResponse;
 import com.flowmatic.flowmatic_back.service.AgencyService;
@@ -33,7 +35,7 @@ public class AgencyController {
   @PutMapping
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<AgencyResponse> updateAgency(
-      @RequestBody AgencyUpdateRequest request,
+      @Valid @RequestBody AgencyUpdateRequest request,
       @AuthenticationPrincipal String userEmail) {
     return ResponseEntity.ok(agencyService.updateAgency(request, userEmail));
   }
