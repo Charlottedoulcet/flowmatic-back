@@ -1,8 +1,10 @@
 package com.flowmatic.flowmatic_back.dto.request.user;
 
+import java.util.Set;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +26,6 @@ public class UserUpdateRequest {
   @Size(min = 6)
   private String password;
 
-  @NotNull
-  private String role;
+  @NotEmpty
+  private Set<String> roles; // ["ADMIN", "EMPLOYEE"] — au moins un rôle requis
 }

@@ -1,6 +1,8 @@
 package com.flowmatic.flowmatic_back.service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -61,7 +63,7 @@ public class UserServiceImpl implements UserService {
       throw new DuplicateResourceException("Email déjà utilisé : " + request.getEmail());
     }
 
-    Role role = parseRole(request.getRole());
+    Set<Role> roles = parseRoles(request.getRoles());
 
     User user = new User();
     user.setFirstName(request.getFirstName());
@@ -69,7 +71,7 @@ public class UserServiceImpl implements UserService {
     user.setEmail(request.getEmail());
     user.setPassword(passwordEncoder.encode(request.getPassword()));
     user.setAgency(currentUser.getAgency());
-    user.getRoles().add(role);
+    user.setRoles(roles);
 
     return userMapper.toResponse(userRepository.save(user));
   }
@@ -89,9 +91,9 @@ public class UserServiceImpl implements UserService {
       user.setPassword(passwordEncoder.encode(request.getPassword()));
     }
 
-    Role role = parseRole(request.getRole());
+    Set<Role> roles = parseRoles(request.getRoles());
     user.getRoles().clear();
-    user.getRoles().add(role);
+    user.getRoles().addAll(roles);
 
     return userMapper.toResponse(userRepository.save(user));
   }
@@ -113,6 +115,12 @@ public class UserServiceImpl implements UserService {
   private User findUserByEmail(String email) {
     return userRepository.findByEmail(email)
         .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé : " + email));
+  }
+
+  private Set<Role> parseRoles(Set<String> roleNames) {
+    return roleNames.stream()
+        .map(this::parseRole)
+        .collect(Collectors.toSet());
   }
 
   private Role parseRole(String roleName) {
