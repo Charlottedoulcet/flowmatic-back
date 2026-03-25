@@ -19,6 +19,7 @@ import com.flowmatic.flowmatic_back.exception.BadRequestException;
 import com.flowmatic.flowmatic_back.exception.DuplicateResourceException;
 import com.flowmatic.flowmatic_back.exception.ResourceNotFoundException;
 import com.flowmatic.flowmatic_back.mapper.UserMapper;
+import com.flowmatic.flowmatic_back.repository.QuoteRepository;
 import com.flowmatic.flowmatic_back.repository.UserRepository;
 import com.flowmatic.flowmatic_back.security.UserDetail;
 
@@ -28,13 +29,16 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
   private final UserMapper userMapper;
+  private final QuoteRepository quoteRepository;
 
   public UserServiceImpl(UserRepository userRepository,
       PasswordEncoder passwordEncoder,
-      UserMapper userMapper) {
+      UserMapper userMapper,
+      QuoteRepository quoteRepository) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
     this.userMapper = userMapper;
+    this.quoteRepository = quoteRepository;
   }
 
   @Override
@@ -93,7 +97,6 @@ public class UserServiceImpl implements UserService {
 
     Set<Role> roles = parseRoles(request.getRoles());
 
-    // Un admin ne peut pas se retirer lui-même le rôle ADMIN
     if (user.getEmail().equals(userEmail)
         && user.getRoles().contains(Role.ADMIN)
         && !roles.contains(Role.ADMIN)) {
@@ -117,6 +120,7 @@ public class UserServiceImpl implements UserService {
       throw new BadRequestException("Vous ne pouvez pas supprimer votre propre compte");
     }
 
+    quoteRepository.nullifyCreatedBy(id);
     userRepository.delete(user);
   }
 
