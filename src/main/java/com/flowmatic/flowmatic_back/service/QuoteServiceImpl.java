@@ -47,7 +47,7 @@ public class QuoteServiceImpl implements QuoteService {
   @Transactional(readOnly = true)
   public List<QuoteListResponse> getAllByAgency(String userEmail) {
     User user = findUserByEmail(userEmail);
-    return quoteRepository.findByAgencyId(user.getAgency().getId())
+    return quoteRepository.findByAgencyIdWithCreatedBy(user.getAgency().getId())
         .stream()
         .map(quoteMapper::toListResponse)
         .toList();
@@ -211,7 +211,7 @@ public class QuoteServiceImpl implements QuoteService {
   }
 
   private String generateReferenceNumber(Long agencyId) {
-    long count = quoteRepository.countByAgencyId(agencyId);
+    long count = quoteRepository.countByAgencyIdLocked(agencyId);
     return "DEV-%d-%04d".formatted(Year.now().getValue(), count + 1);
   }
 }
