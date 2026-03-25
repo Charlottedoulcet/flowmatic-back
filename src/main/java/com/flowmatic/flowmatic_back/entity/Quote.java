@@ -3,11 +3,10 @@ package com.flowmatic.flowmatic_back.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import com.flowmatic.flowmatic_back.entity.enums.QuoteStatus;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.flowmatic.flowmatic_back.entity.enums.QuoteStatus;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -118,5 +117,4 @@ public class Quote {
   protected void onUpdate() {
     updatedAt = LocalDateTime.now();
   }
-
 }

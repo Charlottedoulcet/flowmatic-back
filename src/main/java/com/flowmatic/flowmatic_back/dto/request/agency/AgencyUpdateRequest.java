@@ -1,14 +1,12 @@
-package com.flowmatic.flowmatic_back.dto.response.agency;
+package com.flowmatic.flowmatic_back.dto.request.agency;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class AgencyResponse {
+public class AgencyUpdateRequest {
 
-  private Long id;
-  private String name;
   private String logoUrl;
   private String primaryColor;
   private String secondaryColor;

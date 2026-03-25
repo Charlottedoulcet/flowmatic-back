@@ -6,13 +6,11 @@ import java.util.List;
 
 import com.flowmatic.flowmatic_back.entity.enums.QuoteStatus;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class QuoteResponse {
   private Long id;
   private String referenceNumber;

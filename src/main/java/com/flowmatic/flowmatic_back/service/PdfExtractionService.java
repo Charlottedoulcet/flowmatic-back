@@ -2,12 +2,14 @@ package com.flowmatic.flowmatic_back.service;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,13 +30,24 @@ public class PdfExtractionService {
 
   private static final String MODEL = "claude-sonnet-4-6";
   private static final String API_URL = "https://api.anthropic.com/v1/messages";
+  private static final long MAX_PDF_SIZE_BYTES = 10 * 1024 * 1024;
 
   public PdfExtractionService(ObjectMapper objectMapper) {
-    this.restClient = RestClient.create();
+    SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+    factory.setConnectTimeout(Duration.ofSeconds(10));
+    factory.setReadTimeout(Duration.ofSeconds(180));
+    this.restClient = RestClient.builder().requestFactory(factory).build();
     this.objectMapper = objectMapper;
   }
 
   public ExtractionResponse extractFromPdf(MultipartFile file) {
+    if (!"application/pdf".equals(file.getContentType())) {
+      throw new ExtractionFailedException("Seuls les fichiers PDF sont acceptés");
+    }
+    if (file.getSize() > MAX_PDF_SIZE_BYTES) {
+      throw new ExtractionFailedException("Le fichier PDF ne doit pas dépasser 10 Mo");
+    }
+
     try {
       byte[] pdfBytes = file.getBytes();
       String base64Pdf = Base64.getEncoder().encodeToString(pdfBytes);
@@ -52,13 +65,8 @@ public class PdfExtractionService {
                       "source", Map.of(
                           "type", "base64",
                           "media_type", "application/pdf",
-                          "data", base64Pdf
-                      )
-                  ),
-                  Map.of("type", "text", "text", prompt)
-              ))
-          )
-      );
+                          "data", base64Pdf)),
+                  Map.of("type", "text", "text", prompt)))));
 
       String rawResponse = restClient.post()
           .uri(API_URL)

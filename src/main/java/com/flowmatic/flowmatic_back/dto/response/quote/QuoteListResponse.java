@@ -4,13 +4,11 @@ import java.math.BigDecimal;
 
 import com.flowmatic.flowmatic_back.entity.enums.QuoteStatus;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class QuoteListResponse {
 
   private Long id;
