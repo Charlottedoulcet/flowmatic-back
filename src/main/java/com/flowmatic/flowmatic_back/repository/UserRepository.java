@@ -15,5 +15,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   public List<User> findByAgencyId(Long agencyId);
 
-  public Optional<User> findByIdAndByAgencyId(Long id, Long agencyId);
+  public Optional<User> findByIdAndAgencyId(Long id, Long agencyId);
 }
