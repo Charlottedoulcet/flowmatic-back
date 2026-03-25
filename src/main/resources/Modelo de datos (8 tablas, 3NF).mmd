@@ -1,0 +1,109 @@
+erDiagram
+    Agency ||--o{ User : "has"
+    Agency ||--o{ Quote : "has"
+    User ||--o{ Quote : "creates"
+    User ||--o{ user_roles : "has"
+    Quote ||--o{ QuoteDay : "contains"
+    Quote ||--o{ QuoteInclusion : "contains"
+    Quote ||--o{ PaymentCondition : "contains"
+    Quote ||--o{ QuoteSupplement : "contains"
+    Quote ||--o{ QuoteAccommodation : "contains"
+
+    Agency {
+        bigint id PK
+        varchar name
+        varchar logo_url
+        varchar primary_color
+        varchar secondary_color
+        text terms_and_conditions
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    User {
+        bigint id PK
+        bigint agency_id FK
+        varchar email
+        varchar password
+        varchar first_name
+        varchar last_name
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    user_roles {
+        bigint user_id FK
+        varchar role "ADMIN or EMPLOYEE"
+    }
+
+    Quote {
+        bigint id PK
+        bigint agency_id FK
+        bigint created_by FK
+        varchar reference_number
+        varchar title
+        varchar client_name
+        varchar client_email
+        varchar destination
+        text travel_wishes
+        int participant_count
+        date start_date
+        date end_date
+        decimal price_per_person
+        varchar currency "default: EUR"
+        varchar cover_image_url
+        enum status "PENDING SENT SIGNED PAID CANCELLED"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    QuoteDay {
+        bigint id PK
+        bigint quote_id FK
+        int day_number
+        varchar date "e.g. samedi 11 mars"
+        varchar title
+        varchar summary
+        text description
+        varchar night_location
+        varchar transport_duration
+        varchar accommodation_name
+        varchar accommodation_location
+        varchar room_type
+        varchar meals
+        text included_in_day
+    }
+
+    QuoteInclusion {
+        bigint id PK
+        bigint quote_id FK
+        text description
+        boolean included "true=included false=excluded"
+    }
+
+    PaymentCondition {
+        bigint id PK
+        bigint quote_id FK
+        varchar description
+        decimal percentage
+        varchar due_date_description
+    }
+
+    QuoteSupplement {
+        bigint id PK
+        bigint quote_id FK
+        varchar description
+        decimal price_per_person
+        decimal total_price
+        varchar currency
+    }
+
+    QuoteAccommodation {
+        bigint id PK
+        bigint quote_id FK
+        varchar name
+        varchar location
+        varchar rating
+        text description
+        int display_order
+    }
