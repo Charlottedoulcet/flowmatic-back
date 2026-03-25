@@ -9,13 +9,11 @@ import com.flowmatic.flowmatic_back.dto.request.quote.QuoteDayRequest;
 import com.flowmatic.flowmatic_back.dto.request.quote.QuoteInclusionRequest;
 import com.flowmatic.flowmatic_back.dto.request.quote.QuoteSupplementRequest;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class ExtractionResponse {
   private String title;
   private String clientName;
