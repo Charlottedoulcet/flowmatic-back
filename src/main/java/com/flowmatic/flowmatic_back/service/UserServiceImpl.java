@@ -92,6 +92,14 @@ public class UserServiceImpl implements UserService {
     }
 
     Set<Role> roles = parseRoles(request.getRoles());
+
+    // Un admin ne peut pas se retirer lui-même le rôle ADMIN
+    if (user.getEmail().equals(userEmail)
+        && user.getRoles().contains(Role.ADMIN)
+        && !roles.contains(Role.ADMIN)) {
+      throw new BadRequestException("Vous ne pouvez pas vous retirer le rôle administrateur");
+    }
+
     user.getRoles().clear();
     user.getRoles().addAll(roles);
 
