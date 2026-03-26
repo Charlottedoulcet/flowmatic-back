@@ -16,6 +16,7 @@ public class QuoteListResponse {
   private String title;
   private String clientName;
   private String destination;
+  private Integer participantCount;
   private BigDecimal pricePerPerson;
   private QuoteStatus status;
   private Long createdById;
