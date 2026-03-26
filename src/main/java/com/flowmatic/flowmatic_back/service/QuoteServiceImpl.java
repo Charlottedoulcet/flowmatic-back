@@ -68,8 +68,9 @@ public class QuoteServiceImpl implements QuoteService {
   public QuoteResponse createQuote(QuoteCreateRequest request, String userEmail) {
     User user = findUserByEmail(userEmail);
     Quote quote = quoteMapper.toEntity(request, user.getAgency(), user);
-    quote.setReferenceNumber(generateReferenceNumber(user.getAgency().getId()));
     Quote saved = quoteRepository.save(quote);
+    saved.setReferenceNumber(generateReferenceNumber(saved.getId()));
+    saved = quoteRepository.save(saved);
     return quoteMapper.toResponse(saved);
   }
 
@@ -210,8 +211,7 @@ public class QuoteServiceImpl implements QuoteService {
     }
   }
 
-  private String generateReferenceNumber(Long agencyId) {
-    long count = quoteRepository.countByAgencyIdLocked(agencyId);
-    return "DEV-%d-%04d".formatted(Year.now().getValue(), count + 1);
+  private String generateReferenceNumber(Long quoteId) {
+    return "DEV-%d-%04d".formatted(Year.now().getValue(), quoteId);
   }
 }
